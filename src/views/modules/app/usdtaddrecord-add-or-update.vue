@@ -3,15 +3,15 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-    <el-form-item label="" prop="address">
-      <el-input v-model="dataForm.address" placeholder=""></el-input>
+    <el-form :model="dataForm" :rules="dataRule" label-position="left" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+    <el-form-item label="地址" prop="address">
+      <el-input v-model="dataForm.address" placeholder="地址"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="number">
-      <el-input v-model="dataForm.number" placeholder=""></el-input>
+    <el-form-item label="数量" prop="number">
+      <el-input v-model="dataForm.number" placeholder="数量"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="time">
-      <el-input v-model="dataForm.time" placeholder=""></el-input>
+    <el-form-item label="时间" prop="time">
+      <el-input v-model="dataForm.time" placeholder="时间"></el-input>
     </el-form-item>
     <el-form-item label="" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder=""></el-input>
@@ -42,13 +42,13 @@
         },
         dataRule: {
           address: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '地址不能为空', trigger: 'blur' }
           ],
           number: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '数量不能为空', trigger: 'blur' }
           ],
           time: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '时间不能为空', trigger: 'blur' }
           ],
           createTime: [
             { required: true, message: '不能为空', trigger: 'blur' }

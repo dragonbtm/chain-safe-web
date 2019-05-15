@@ -26,25 +26,25 @@
         prop="id"
         header-align="center"
         align="center"
-        label="">
+        label="id">
       </el-table-column>
       <el-table-column
         prop="address"
         header-align="center"
         align="center"
-        label="">
+        label="地址">
       </el-table-column>
       <el-table-column
         prop="number"
         header-align="center"
         align="center"
-        label="">
+        label="数量">
       </el-table-column>
       <el-table-column
         prop="time"
         header-align="center"
         align="center"
-        label="">
+        label="时间">
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -120,7 +120,8 @@
             'key': this.dataForm.key
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
+          console.log(data)
+          if (data && data.code === 1) {
             this.dataList = data.page.list
             this.totalPage = data.page.totalCount
           } else {
@@ -167,7 +168,7 @@
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
-            if (data && data.code === 0) {
+            if (data && data.code === 1) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

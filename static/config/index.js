@@ -5,10 +5,10 @@
   window.SITE_CONFIG = {};
 
 
-  // window.SITE_CONFIG['baseUrl'] = 'http://localhost:10080';
+  window.SITE_CONFIG['baseUrl'] = 'http://localhost:10080';
 
   //omni1
-  window.SITE_CONFIG['baseUrl'] = 'http://47.244.51.197:10080';
+  // window.SITE_CONFIG['baseUrl'] = 'http://47.244.51.197:10080';
   // api接口请求地址  omni2 47.244.51.197
   // window.SITE_CONFIG['baseUrl'] = 'http://47.75.210.123:10080';
 
