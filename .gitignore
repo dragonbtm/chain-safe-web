@@ -16,3 +16,8 @@ selenium-debug.log
 *.njsproj
 *.sln
 /.idea/
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/chain-safe-web.iml
+/.idea/workspace.xml
