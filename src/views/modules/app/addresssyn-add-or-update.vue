@@ -4,14 +4,14 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" label-position="left" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-    <el-form-item label="地址" prop="address">
-      <el-input v-model="dataForm.address" placeholder="地址"></el-input>
+    <el-form-item label="" prop="address">
+      <el-input v-model="dataForm.address" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="数量" prop="number">
-      <el-input v-model="dataForm.number" placeholder="数量"></el-input>
+    <el-form-item label="节点名" prop="node">
+      <el-input v-model="dataForm.node" placeholder="节点名"></el-input>
     </el-form-item>
-    <el-form-item label="时间" prop="time">
-      <el-input v-model="dataForm.time" placeholder="时间"></el-input>
+    <el-form-item label="1.成功 2.失败" prop="status">
+      <el-input v-model="dataForm.status" placeholder="1.成功 2.失败"></el-input>
     </el-form-item>
     <el-form-item label="" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder=""></el-input>
@@ -35,20 +35,20 @@
         dataForm: {
           id: 0,
           address: '',
-          number: '',
-          time: '',
+          node: '',
+          status: '',
           createTime: '',
           updateTime: ''
         },
         dataRule: {
           address: [
-            { required: true, message: '地址不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
-          number: [
-            { required: true, message: '数量不能为空', trigger: 'blur' }
+          node: [
+            { required: true, message: '节点名不能为空', trigger: 'blur' }
           ],
-          time: [
-            { required: true, message: '时间不能为空', trigger: 'blur' }
+          status: [
+            { required: true, message: '1.成功 2.失败不能为空', trigger: 'blur' }
           ],
           createTime: [
             { required: true, message: '不能为空', trigger: 'blur' }
@@ -67,16 +67,16 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/app/addresssyn/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm.address = data.usdtaddrecord.address
-                this.dataForm.number = data.usdtaddrecord.number
-                this.dataForm.time = data.usdtaddrecord.time
-                this.dataForm.createTime = data.usdtaddrecord.createTime
-                this.dataForm.updateTime = data.usdtaddrecord.updateTime
+              if (data && data.code === 1) {
+                this.dataForm.address = data.addresssyn.address
+                this.dataForm.node = data.addresssyn.node
+                this.dataForm.status = data.addresssyn.status
+                this.dataForm.createTime = data.addresssyn.createTime
+                this.dataForm.updateTime = data.addresssyn.updateTime
               }
             })
           }
@@ -87,13 +87,13 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/${!this.dataForm.id ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/app/addresssyn/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'address': this.dataForm.address,
-                'number': this.dataForm.number,
-                'time': this.dataForm.time,
+                'node': this.dataForm.node,
+                'status': this.dataForm.status,
                 'createTime': this.dataForm.createTime,
                 'updateTime': this.dataForm.updateTime
               })

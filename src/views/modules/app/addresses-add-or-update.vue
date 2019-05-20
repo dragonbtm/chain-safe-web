@@ -4,14 +4,23 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" label-position="left" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+    <el-form-item label="账户" prop="account">
+      <el-input v-model="dataForm.account" placeholder="账户"></el-input>
+    </el-form-item>
     <el-form-item label="地址" prop="address">
       <el-input v-model="dataForm.address" placeholder="地址"></el-input>
     </el-form-item>
-    <el-form-item label="数量" prop="number">
-      <el-input v-model="dataForm.number" placeholder="数量"></el-input>
+    <el-form-item label="用户id" prop="userid">
+      <el-input v-model="dataForm.userid" placeholder="用户id"></el-input>
     </el-form-item>
-    <el-form-item label="时间" prop="time">
-      <el-input v-model="dataForm.time" placeholder="时间"></el-input>
+    <el-form-item label="资产" prop="number">
+      <el-input v-model="dataForm.number" placeholder="资产"></el-input>
+    </el-form-item>
+    <el-form-item label="生成节点" prop="node">
+      <el-input v-model="dataForm.node" placeholder="生成节点"></el-input>
+    </el-form-item>
+    <el-form-item label="1.平台生成 2.同步" prop="type">
+      <el-input v-model="dataForm.type" placeholder="1.平台生成 2.同步"></el-input>
     </el-form-item>
     <el-form-item label="" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder=""></el-input>
@@ -34,21 +43,33 @@
         visible: false,
         dataForm: {
           id: 0,
+          account: '',
           address: '',
+          userid: '',
           number: '',
-          time: '',
+          node: '',
+          type: '',
           createTime: '',
           updateTime: ''
         },
         dataRule: {
+          account: [
+            { required: true, message: '账户不能为空', trigger: 'blur' }
+          ],
           address: [
             { required: true, message: '地址不能为空', trigger: 'blur' }
           ],
-          number: [
-            { required: true, message: '数量不能为空', trigger: 'blur' }
+          userid: [
+            { required: true, message: '用户id不能为空', trigger: 'blur' }
           ],
-          time: [
-            { required: true, message: '时间不能为空', trigger: 'blur' }
+          number: [
+            { required: true, message: '资产不能为空', trigger: 'blur' }
+          ],
+          node: [
+            { required: true, message: '生成节点不能为空', trigger: 'blur' }
+          ],
+          type: [
+            { required: true, message: '1.平台生成 2.同步不能为空', trigger: 'blur' }
           ],
           createTime: [
             { required: true, message: '不能为空', trigger: 'blur' }
@@ -67,16 +88,19 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/app/addresses/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm.address = data.usdtaddrecord.address
-                this.dataForm.number = data.usdtaddrecord.number
-                this.dataForm.time = data.usdtaddrecord.time
-                this.dataForm.createTime = data.usdtaddrecord.createTime
-                this.dataForm.updateTime = data.usdtaddrecord.updateTime
+              if (data && data.code === 1) {
+                this.dataForm.account = data.addresses.account
+                this.dataForm.address = data.addresses.address
+                this.dataForm.userid = data.addresses.userid
+                this.dataForm.number = data.addresses.number
+                this.dataForm.node = data.addresses.node
+                this.dataForm.type = data.addresses.type
+                this.dataForm.createTime = data.addresses.createTime
+                this.dataForm.updateTime = data.addresses.updateTime
               }
             })
           }
@@ -87,13 +111,16 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/${!this.dataForm.id ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/app/addresses/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
+                'account': this.dataForm.account,
                 'address': this.dataForm.address,
+                'userid': this.dataForm.userid,
                 'number': this.dataForm.number,
-                'time': this.dataForm.time,
+                'node': this.dataForm.node,
+                'type': this.dataForm.type,
                 'createTime': this.dataForm.createTime,
                 'updateTime': this.dataForm.updateTime
               })

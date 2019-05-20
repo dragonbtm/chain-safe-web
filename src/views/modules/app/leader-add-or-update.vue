@@ -4,14 +4,11 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" label-position="left" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-    <el-form-item label="地址" prop="address">
-      <el-input v-model="dataForm.address" placeholder="地址"></el-input>
+    <el-form-item label="名字" prop="name">
+      <el-input v-model="dataForm.name" placeholder="名字"></el-input>
     </el-form-item>
-    <el-form-item label="数量" prop="number">
-      <el-input v-model="dataForm.number" placeholder="数量"></el-input>
-    </el-form-item>
-    <el-form-item label="时间" prop="time">
-      <el-input v-model="dataForm.time" placeholder="时间"></el-input>
+    <el-form-item label="主机" prop="host">
+      <el-input v-model="dataForm.host" placeholder="主机"></el-input>
     </el-form-item>
     <el-form-item label="" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder=""></el-input>
@@ -34,21 +31,17 @@
         visible: false,
         dataForm: {
           id: 0,
-          address: '',
-          number: '',
-          time: '',
+          name: '',
+          host: '',
           createTime: '',
           updateTime: ''
         },
         dataRule: {
-          address: [
-            { required: true, message: '地址不能为空', trigger: 'blur' }
+          name: [
+            { required: true, message: '名字不能为空', trigger: 'blur' }
           ],
-          number: [
-            { required: true, message: '数量不能为空', trigger: 'blur' }
-          ],
-          time: [
-            { required: true, message: '时间不能为空', trigger: 'blur' }
+          host: [
+            { required: true, message: '主机不能为空', trigger: 'blur' }
           ],
           createTime: [
             { required: true, message: '不能为空', trigger: 'blur' }
@@ -67,16 +60,15 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/app/leader/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm.address = data.usdtaddrecord.address
-                this.dataForm.number = data.usdtaddrecord.number
-                this.dataForm.time = data.usdtaddrecord.time
-                this.dataForm.createTime = data.usdtaddrecord.createTime
-                this.dataForm.updateTime = data.usdtaddrecord.updateTime
+              if (data && data.code === 1) {
+                this.dataForm.name = data.leader.name
+                this.dataForm.host = data.leader.host
+                this.dataForm.createTime = data.leader.createTime
+                this.dataForm.updateTime = data.leader.updateTime
               }
             })
           }
@@ -87,13 +79,12 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/app/usdtaddrecord/${!this.dataForm.id ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/app/leader/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
-                'address': this.dataForm.address,
-                'number': this.dataForm.number,
-                'time': this.dataForm.time,
+                'name': this.dataForm.name,
+                'host': this.dataForm.host,
                 'createTime': this.dataForm.createTime,
                 'updateTime': this.dataForm.updateTime
               })
