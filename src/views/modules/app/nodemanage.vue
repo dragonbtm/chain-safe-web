@@ -38,7 +38,12 @@
         prop="type"
         header-align="center"
         align="center"
-        label="类型1.充币 2.提币 ,3分发比特币">
+        label="类型">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.type === 1" type="primary">充币</el-tag>
+          <el-tag v-if="+scope.row.type === 2" type="primary">提币</el-tag>
+          <el-tag v-if="+scope.row.type === 3" type="primary">分发比特币</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="rpcuser"
@@ -68,7 +73,12 @@
         prop="status"
         header-align="center"
         align="center"
-        label="状态1.正常 2.异常">
+        label="状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.status === 1" type="success">启用</el-tag>
+          <el-tag v-if="+scope.row.status === 2" type="info">停用</el-tag>
+          <el-tag v-if="+scope.row.status === 3" type="primary">异常</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="address"
@@ -97,6 +107,8 @@
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="+scope.row.status === 1" type="text" size="small" @click="statusHandle(scope.row, 2)">停用</el-button>
+          <el-button v-if="+scope.row.status === 2" type="text" size="small" @click="statusHandle(scope.row, 1)">启用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -116,6 +128,7 @@
 
 <script>
   import AddOrUpdate from './nodemanage-add-or-update'
+  import { formatTime } from '../../../utils'
   export default {
     data () {
       return {
@@ -211,6 +224,37 @@
             }
           })
         })
+      },
+      // 禁用
+      statusHandle (row, status) {
+        const textStatus = status === 1 ? `启用id=${row.id}节点` : `停用id=${row.id}节点`
+        const dataForm = Object.assign({}, row)
+        dataForm.status = status
+        this.$confirm(`此操作将${textStatus}, 是否继续?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          dataForm.updateTime = formatTime()
+          this.$http({
+            url: this.$http.adornUrl(`/app/nodemanage/${!dataForm.id ? 'save' : 'update'}`),
+            method: 'post',
+            data: this.$http.adornData(dataForm)
+          }).then(({data}) => {
+            if (data && data.code === 1) {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }).catch(() => {})
       }
     }
   }

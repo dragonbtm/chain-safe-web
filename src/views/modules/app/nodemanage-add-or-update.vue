@@ -7,8 +7,12 @@
     <el-form-item label="节点名字" prop="name">
       <el-input v-model="dataForm.name" placeholder="节点名字"></el-input>
     </el-form-item>
-    <el-form-item label="类型1.充币 2.提币 ,3分发比特币" prop="type">
-      <el-input v-model="dataForm.type" placeholder="类型1.充币 2.提币 ,3分发比特币"></el-input>
+    <el-form-item label="类型" prop="type">
+      <el-select v-model="dataForm.type" style="width: 100%;" placeholder="请选择类型">
+        <el-option label="充币" :value="1"/>
+        <el-option label="提币" :value="2"/>
+        <el-option label="分发比特币" :value="3"/>
+      </el-select>
     </el-form-item>
     <el-form-item label="用户" prop="rpcuser">
       <el-input v-model="dataForm.rpcuser" placeholder="用户"></el-input>
@@ -22,16 +26,20 @@
     <el-form-item label="端口" prop="port">
       <el-input v-model="dataForm.port" placeholder="端口"></el-input>
     </el-form-item>
-    <el-form-item label="状态1.正常 2.异常" prop="status">
-      <el-input v-model="dataForm.status" placeholder="状态1.正常 2.异常"></el-input>
+    <el-form-item label="状态" prop="status">
+      <el-select v-model="dataForm.status" style="width: 100%;" placeholder="请选择状态">
+        <el-option label="启用" :value="1"/>
+        <el-option label="停用" :value="2"/>
+        <el-option label="异常" :value="3"/>
+      </el-select>
     </el-form-item>
     <el-form-item label="总地址" prop="address">
       <el-input v-model="dataForm.address" placeholder="总地址"></el-input>
     </el-form-item>
-    <el-form-item label="创建时间" prop="createTime">
+    <el-form-item v-if="false" label="创建时间" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
     </el-form-item>
-    <el-form-item label="更新时间" prop="updateTime">
+    <el-form-item v-if="false" label="更新时间" prop="updateTime">
       <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
     </el-form-item>
     </el-form>
@@ -43,6 +51,8 @@
 </template>
 
 <script>
+  import { formatTime } from '../../../utils'
+
   export default {
     data () {
       return {
@@ -65,7 +75,7 @@
             { required: true, message: '节点名字不能为空', trigger: 'blur' }
           ],
           type: [
-            { required: true, message: '类型1.充币 2.提币 ,3分发比特币不能为空', trigger: 'blur' }
+            { required: true, message: '类型不能为空', trigger: 'blur' }
           ],
           rpcuser: [
             { required: true, message: '用户不能为空', trigger: 'blur' }
@@ -80,7 +90,7 @@
             { required: true, message: '端口不能为空', trigger: 'blur' }
           ],
           status: [
-            { required: true, message: '状态1.正常 2.异常不能为空', trigger: 'blur' }
+            { required: true, message: '状态不能为空', trigger: 'blur' }
           ],
           address: [
             { required: true, message: '总地址不能为空', trigger: 'blur' }
@@ -107,16 +117,16 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.code === 1) {
-                this.dataForm.name = data.nodemanage.name
-                this.dataForm.type = data.nodemanage.type
-                this.dataForm.rpcuser = data.nodemanage.rpcuser
-                this.dataForm.rpcpassword = data.nodemanage.rpcpassword
-                this.dataForm.ip = data.nodemanage.ip
-                this.dataForm.port = data.nodemanage.port
-                this.dataForm.status = data.nodemanage.status
-                this.dataForm.address = data.nodemanage.address
-                this.dataForm.createTime = data.nodemanage.createTime
-                this.dataForm.updateTime = data.nodemanage.updateTime
+                this.dataForm.name = data.nodeManage.name
+                this.dataForm.type = data.nodeManage.type
+                this.dataForm.rpcuser = data.nodeManage.rpcuser
+                this.dataForm.rpcpassword = data.nodeManage.rpcpassword
+                this.dataForm.ip = data.nodeManage.ip
+                this.dataForm.port = data.nodeManage.port
+                this.dataForm.status = data.nodeManage.status
+                this.dataForm.address = data.nodeManage.address
+                this.dataForm.createTime = data.nodeManage.createTime
+                this.dataForm.updateTime = data.nodeManage.updateTime
               }
             })
           }
@@ -139,8 +149,8 @@
                 'port': this.dataForm.port,
                 'status': this.dataForm.status,
                 'address': this.dataForm.address,
-                'createTime': this.dataForm.createTime,
-                'updateTime': this.dataForm.updateTime
+                'createTime': this.dataForm.createTime ? this.dataForm.createTime : formatTime(),
+                'updateTime': formatTime()
               })
             }).then(({data}) => {
               if (data && data.code === 1) {

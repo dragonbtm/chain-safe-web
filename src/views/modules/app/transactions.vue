@@ -98,13 +98,23 @@
         prop="status"
         header-align="center"
         align="center"
-        label="状态0.处理失败 1.转账成功 2.比特币不足 3.转账失败">
+        label="状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.status === 0" type="error">处理失败</el-tag>
+          <el-tag v-if="+scope.row.status === 1" type="success">转账成功</el-tag>
+          <el-tag v-if="+scope.row.status === 2" type="primary">比特币不足</el-tag>
+          <el-tag v-if="+scope.row.status === 3" type="error">转账失败</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="isSend"
         header-align="center"
         align="center"
-        label="0.消息未发送 1.消息已发送">
+        label="消息发送状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.isSend === 1" type="info">消息未发送</el-tag>
+          <el-tag v-if="+scope.row.isSend === 0" type="success">消息已发送</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createTime"

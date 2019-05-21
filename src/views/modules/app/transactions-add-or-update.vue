@@ -37,16 +37,24 @@
     <el-form-item label="块" prop="block">
       <el-input v-model="dataForm.block" placeholder="块"></el-input>
     </el-form-item>
-    <el-form-item label="状态0.处理失败 1.转账成功 2.比特币不足 3.转账失败" prop="status">
-      <el-input v-model="dataForm.status" placeholder="状态0.处理失败 1.转账成功 2.比特币不足 3.转账失败"></el-input>
+    <el-form-item label="状态" prop="status">
+      <el-select v-model="dataForm.status" style="width: 100%;" placeholder="请选择状态">
+      <el-option label="处理失败" :value="0"/>
+      <el-option label="转账成功" :value="1"/>
+      <el-option label="比特币不足" :value="2"/>
+      <el-option label="转账失败" :value="3"/>
+      </el-select>
     </el-form-item>
-    <el-form-item label="0.消息未发送 1.消息已发送" prop="isSend">
-      <el-input v-model="dataForm.isSend" placeholder="0.消息未发送 1.消息已发送"></el-input>
+    <el-form-item label="消息状态" prop="isSend">
+      <el-select v-model="dataForm.isSend" style="width: 100%;" placeholder="请选择消息状态">
+        <el-option label="消息未发送" :value="0"/>
+        <el-option label="消息已发送" :value="1"/>
+      </el-select>
     </el-form-item>
-    <el-form-item label="创建时间" prop="createTime">
+    <el-form-item v-if="false" label="创建时间" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
     </el-form-item>
-    <el-form-item label="更新时间" prop="updateTime">
+    <el-form-item v-if="false" label="更新时间" prop="updateTime">
       <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
     </el-form-item>
     </el-form>
@@ -58,6 +66,8 @@
 </template>
 
 <script>
+  import { formatTime } from '../../../utils'
+
   export default {
     data () {
       return {
@@ -156,7 +166,7 @@
                 this.dataForm.status = data.transactions.status
                 this.dataForm.isSend = data.transactions.isSend
                 this.dataForm.createTime = data.transactions.createTime
-                this.dataForm.updateTime = data.transactions.updateTime
+                this.dataForm.updateTime = formatTime()
               }
             })
           }
@@ -184,8 +194,8 @@
                 'block': this.dataForm.block,
                 'status': this.dataForm.status,
                 'isSend': this.dataForm.isSend,
-                'createTime': this.dataForm.createTime,
-                'updateTime': this.dataForm.updateTime
+                'createTime': this.dataForm.createTime ? this.dataForm.createTime : formatTime(),
+                'updateTime': formatTime()
               })
             }).then(({data}) => {
               if (data && data.code === 1) {
