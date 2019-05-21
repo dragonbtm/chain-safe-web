@@ -52,12 +52,12 @@
         align="center"
         label="金额">
       </el-table-column>
-      <el-table-column
+      <!--<el-table-column
         prop="confirmations"
         header-align="center"
         align="center"
         label="确认次数">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="fromaddress"
         header-align="center"
@@ -70,30 +70,30 @@
         align="center"
         label="接收方">
       </el-table-column>
-      <el-table-column
+     <!-- <el-table-column
         prop="label"
         header-align="center"
         align="center"
         label="备注">
-      </el-table-column>
-      <el-table-column
+      </el-table-column>-->
+      <!--<el-table-column
         prop="time"
         header-align="center"
         align="center"
         label="时间">
-      </el-table-column>
-      <el-table-column
+      </el-table-column>-->
+      <!--<el-table-column
         prop="timereceived"
         header-align="center"
         align="center"
         label="接收时间">
-      </el-table-column>
-      <el-table-column
+      </el-table-column>-->
+      <!--<el-table-column
         prop="block"
         header-align="center"
         align="center"
         label="块">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="status"
         header-align="center"
@@ -112,8 +112,8 @@
         align="center"
         label="消息发送状态">
         <template slot-scope="scope">
-          <el-tag v-if="+scope.row.isSend === 1" type="info">消息未发送</el-tag>
-          <el-tag v-if="+scope.row.isSend === 0" type="success">消息已发送</el-tag>
+          <el-tag v-if="+scope.row.isSend === 0" type="info">消息未发送</el-tag>
+          <el-tag v-if="+scope.row.isSend === 1" type="success">消息已发送</el-tag>
         </template>
       </el-table-column>
       <el-table-column

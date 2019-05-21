@@ -16,16 +16,16 @@
     <el-form-item label="金额" prop="amount">
       <el-input v-model="dataForm.amount" placeholder="金额"></el-input>
     </el-form-item>
-    <el-form-item label="确认次数" prop="confirmations">
-      <el-input v-model="dataForm.confirmations" placeholder="确认次数"></el-input>
-    </el-form-item>
+<!--    <el-form-item label="确认次数" prop="confirmations">-->
+<!--      <el-input v-model="dataForm.confirmations" placeholder="确认次数"></el-input>-->
+<!--    </el-form-item>-->
     <el-form-item label="发送方" prop="fromaddress">
       <el-input v-model="dataForm.fromaddress" placeholder="发送方"></el-input>
     </el-form-item>
     <el-form-item label="接收方" prop="toaddress">
       <el-input v-model="dataForm.toaddress" placeholder="接收方"></el-input>
     </el-form-item>
-    <el-form-item label="备注" prop="label">
+ <!--   <el-form-item label="备注" prop="label">
       <el-input v-model="dataForm.label" placeholder="备注"></el-input>
     </el-form-item>
     <el-form-item label="时间" prop="time">
@@ -36,7 +36,7 @@
     </el-form-item>
     <el-form-item label="块" prop="block">
       <el-input v-model="dataForm.block" placeholder="块"></el-input>
-    </el-form-item>
+    </el-form-item>-->
     <el-form-item label="状态" prop="status">
       <el-select v-model="dataForm.status" style="width: 100%;" placeholder="请选择状态">
       <el-option label="处理失败" :value="0"/>
@@ -78,13 +78,13 @@
           account: '',
           hash: '',
           amount: '',
-          confirmations: '',
+          // confirmations: '',
           fromaddress: '',
           toaddress: '',
-          label: '',
-          time: '',
-          timereceived: '',
-          block: '',
+          // label: '',
+          // time: '',
+          // timereceived: '',
+          // block: '',
           status: '',
           isSend: '',
           createTime: '',
@@ -103,27 +103,27 @@
           amount: [
             { required: true, message: '金额不能为空', trigger: 'blur' }
           ],
-          confirmations: [
-            { required: true, message: '确认次数不能为空', trigger: 'blur' }
-          ],
+          // confirmations: [
+          //   { required: true, message: '确认次数不能为空', trigger: 'blur' }
+          // ],
           fromaddress: [
             { required: true, message: '发送方不能为空', trigger: 'blur' }
           ],
           toaddress: [
             { required: true, message: '接收方不能为空', trigger: 'blur' }
           ],
-          label: [
-            { required: true, message: '备注不能为空', trigger: 'blur' }
-          ],
-          time: [
-            { required: true, message: '时间不能为空', trigger: 'blur' }
-          ],
-          timereceived: [
-            { required: true, message: '接收时间不能为空', trigger: 'blur' }
-          ],
-          block: [
-            { required: true, message: '块不能为空', trigger: 'blur' }
-          ],
+          // label: [
+          //   { required: true, message: '备注不能为空', trigger: 'blur' }
+          // ],
+          // time: [
+          //   { required: true, message: '时间不能为空', trigger: 'blur' }
+          // ],
+          // timereceived: [
+          //   { required: true, message: '接收时间不能为空', trigger: 'blur' }
+          // ],
+          // block: [
+          //   { required: true, message: '块不能为空', trigger: 'blur' }
+          // ],
           status: [
             { required: true, message: '状态0.处理失败 1.转账成功 2.比特币不足 3.转账失败不能为空', trigger: 'blur' }
           ],
@@ -156,13 +156,13 @@
                 this.dataForm.account = data.transactions.account
                 this.dataForm.hash = data.transactions.hash
                 this.dataForm.amount = data.transactions.amount
-                this.dataForm.confirmations = data.transactions.confirmations
+                // this.dataForm.confirmations = data.transactions.confirmations
                 this.dataForm.fromaddress = data.transactions.fromaddress
                 this.dataForm.toaddress = data.transactions.toaddress
-                this.dataForm.label = data.transactions.label
-                this.dataForm.time = data.transactions.time
-                this.dataForm.timereceived = data.transactions.timereceived
-                this.dataForm.block = data.transactions.block
+                // this.dataForm.label = data.transactions.label
+                // this.dataForm.time = data.transactions.time
+                // this.dataForm.timereceived = data.transactions.timereceived
+                // this.dataForm.block = data.transactions.block
                 this.dataForm.status = data.transactions.status
                 this.dataForm.isSend = data.transactions.isSend
                 this.dataForm.createTime = data.transactions.createTime
@@ -185,13 +185,13 @@
                 'account': this.dataForm.account,
                 'hash': this.dataForm.hash,
                 'amount': this.dataForm.amount,
-                'confirmations': this.dataForm.confirmations,
+                // 'confirmations': this.dataForm.confirmations,
                 'fromaddress': this.dataForm.fromaddress,
                 'toaddress': this.dataForm.toaddress,
-                'label': this.dataForm.label,
-                'time': this.dataForm.time,
-                'timereceived': this.dataForm.timereceived,
-                'block': this.dataForm.block,
+                // 'label': this.dataForm.label,
+                // 'time': this.dataForm.time,
+                // 'timereceived': this.dataForm.timereceived,
+                // 'block': this.dataForm.block,
                 'status': this.dataForm.status,
                 'isSend': this.dataForm.isSend,
                 'createTime': this.dataForm.createTime ? this.dataForm.createTime : formatTime(),
