@@ -16,17 +16,17 @@
     <el-form-item label="资产" prop="number">
       <el-input v-model="dataForm.number" placeholder="资产"></el-input>
     </el-form-item>
-    <el-form-item label="生成节点" prop="node">
-      <el-input v-model="dataForm.node" placeholder="生成节点"></el-input>
+    <el-form-item label="生成节点名" prop="node">
+      <el-input v-model="dataForm.node" placeholder="生成节点名"></el-input>
     </el-form-item>
     <el-form-item label="1.平台生成 2.同步" prop="type">
       <el-input v-model="dataForm.type" placeholder="1.平台生成 2.同步"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="createTime">
-      <el-input v-model="dataForm.createTime" placeholder=""></el-input>
+    <el-form-item label="创建时间" prop="createTime">
+      <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="updateTime">
-      <el-input v-model="dataForm.updateTime" placeholder=""></el-input>
+    <el-form-item label="更新时间" prop="updateTime">
+      <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -66,16 +66,16 @@
             { required: true, message: '资产不能为空', trigger: 'blur' }
           ],
           node: [
-            { required: true, message: '生成节点不能为空', trigger: 'blur' }
+            { required: true, message: '生成节点名不能为空', trigger: 'blur' }
           ],
           type: [
             { required: true, message: '1.平台生成 2.同步不能为空', trigger: 'blur' }
           ],
           createTime: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '创建时间不能为空', trigger: 'blur' }
           ],
           updateTime: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '更新时间不能为空', trigger: 'blur' }
           ]
         }
       }
