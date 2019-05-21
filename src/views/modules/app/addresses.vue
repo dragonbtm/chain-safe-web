@@ -26,7 +26,7 @@
         prop="id"
         header-align="center"
         align="center"
-        label="">
+        label="主键">
       </el-table-column>
       <el-table-column
         prop="account"
@@ -56,7 +56,7 @@
         prop="node"
         header-align="center"
         align="center"
-        label="生成节点">
+        label="生成节点名">
       </el-table-column>
       <el-table-column
         prop="type"
@@ -68,13 +68,13 @@
         prop="createTime"
         header-align="center"
         align="center"
-        label="">
+        label="创建时间">
       </el-table-column>
       <el-table-column
         prop="updateTime"
         header-align="center"
         align="center"
-        label="">
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
