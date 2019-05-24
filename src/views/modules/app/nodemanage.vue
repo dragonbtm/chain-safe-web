@@ -45,7 +45,7 @@
           <el-tag v-if="+scope.row.type === 3" type="primary">分发比特币</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
+     <!-- <el-table-column
         prop="rpcuser"
         header-align="center"
         align="center"
@@ -68,7 +68,7 @@
         header-align="center"
         align="center"
         label="端口">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="status"
         header-align="center"
