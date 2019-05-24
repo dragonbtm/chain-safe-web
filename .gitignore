@@ -22,3 +22,4 @@ selenium-debug.log
 /.idea/vcs.xml
 /.idea/chain-safe-web.iml
 /.idea/workspace.xml
+/static/config/index.js

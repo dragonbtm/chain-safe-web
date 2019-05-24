@@ -100,7 +100,7 @@
         align="center"
         label="状态">
         <template slot-scope="scope">
-          <el-tag v-if="+scope.row.status === 0" type="error">处理失败</el-tag>
+          <el-tag v-if="+scope.row.status === 0" type="error">未处理</el-tag>
           <el-tag v-if="+scope.row.status === 1" type="success">转账成功</el-tag>
           <el-tag v-if="+scope.row.status === 2" type="primary">比特币不足</el-tag>
           <el-tag v-if="+scope.row.status === 3" type="error">转账失败</el-tag>
