@@ -92,9 +92,9 @@
           status: [
             { required: true, message: '状态不能为空', trigger: 'blur' }
           ],
-          address: [
-            { required: true, message: '总地址不能为空', trigger: 'blur' }
-          ],
+          // address: [
+          //   { required: false, message: '总地址不能为空', trigger: 'blur' }
+          // ],
           createTime: [
             { required: true, message: '创建时间不能为空', trigger: 'blur' }
           ],
