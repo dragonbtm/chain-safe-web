@@ -41,6 +41,7 @@
         label="账户">
       </el-table-column>
       <el-table-column
+        :show-overflow-tooltip="true"
         prop="hash"
         header-align="center"
         align="center"
@@ -59,6 +60,7 @@
         label="确认次数">
       </el-table-column>-->
       <el-table-column
+        :show-overflow-tooltip="true"
         prop="fromaddress"
         header-align="center"
         align="center"
@@ -68,6 +70,7 @@
         prop="toaddress"
         header-align="center"
         align="center"
+        :show-overflow-tooltip="true"
         label="接收方">
       </el-table-column>
      <!-- <el-table-column
