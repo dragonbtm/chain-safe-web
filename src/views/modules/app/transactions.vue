@@ -209,6 +209,11 @@
       // 获取数据列表
       getDataList () {
         this.dataListLoading = true
+        for (const key in this.dataForm) {
+          if (!this.dataForm[key]) {
+            delete this.dataForm[key]
+          }
+        }
         this.$http({
           url: this.$http.adornUrl('/app/transactions/list'),
           method: 'get',
