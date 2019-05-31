@@ -59,10 +59,16 @@
         label="生成节点名">
       </el-table-column>
       <el-table-column
+        prop="synNumber"
+        header-align="center"
+        align="center"
+        label="同步节点数量">
+      </el-table-column>
+      <el-table-column
         prop="type"
         header-align="center"
         align="center"
-        label="1.平台生成 2.同步">
+        label="1.同步完成 2.未完成同步">
       </el-table-column>
       <el-table-column
         prop="createTime"
