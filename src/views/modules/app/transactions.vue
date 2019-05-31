@@ -2,7 +2,27 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
+        <el-input v-model="dataForm.sendId" placeholder="请输入发送ID" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="dataForm.account" placeholder="请输入账户ID" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="dataForm.hash" placeholder="请输入hash" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="dataForm.status" placeholder="请选择状态">
+          <el-option label="处理失败" :value="0"/>
+          <el-option label="转账成功" :value="1"/>
+          <el-option label="比特币不足" :value="2"/>
+          <el-option label="转账失败" :value="3"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="dataForm.isSend" style="width: 100%;" placeholder="请选择消息状态">
+          <el-option label="消息未发送" :value="0"/>
+          <el-option label="消息已发送" :value="1"/>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -22,12 +42,12 @@
         align="center"
         width="50">
       </el-table-column>
-      <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="主键">
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        prop="id"-->
+<!--        header-align="center"-->
+<!--        align="center"-->
+<!--        label="主键">-->
+<!--      </el-table-column>-->
       <el-table-column
         prop="sendId"
         header-align="center"
@@ -164,7 +184,11 @@
     data () {
       return {
         dataForm: {
-          key: ''
+          sendId: '',
+          account: '',
+          hash: '',
+          status: '',
+          isSend: ''
         },
         dataList: [],
         pageIndex: 1,
@@ -191,7 +215,11 @@
           params: this.$http.adornParams({
             'page': this.pageIndex,
             'limit': this.pageSize,
-            'key': this.dataForm.key
+            'sendId': this.dataForm.sendId,
+            'account': this.dataForm.account,
+            'hash': this.dataForm.hash,
+            'status': this.dataForm.status,
+            'isSend': this.dataForm.isSend
           })
         }).then(({data}) => {
           if (data && data.code === 1) {

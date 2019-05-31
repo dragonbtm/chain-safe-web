@@ -4,7 +4,7 @@
 ;(function () {
   window.SITE_CONFIG = {}
 
-  window.SITE_CONFIG['baseUrl'] = 'http://192.168.1.64:10080'
+  window.SITE_CONFIG['baseUrl'] = '//chain.gy1118.cn:10080'
 
   // omni1
   // window.SITE_CONFIG['baseUrl'] = 'http://47.244.51.197:10080';
