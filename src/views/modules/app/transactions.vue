@@ -12,7 +12,7 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="dataForm.status" placeholder="请选择状态">
-          <el-option label="处理失败" :value="0"/>
+          <el-option label="未处理" :value="0"/>
           <el-option label="转账成功" :value="1"/>
           <el-option label="比特币不足" :value="2"/>
           <el-option label="转账失败" :value="3"/>
