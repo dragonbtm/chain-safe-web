@@ -12,6 +12,7 @@
         <el-option label="充币" :value="1"/>
         <el-option label="提币" :value="2"/>
         <el-option label="分发比特币" :value="3"/>
+        <el-option label="充币shadow" :value="4"/>
       </el-select>
     </el-form-item>
     <el-form-item label="用户" prop="rpcuser">

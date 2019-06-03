@@ -22,12 +22,12 @@
         align="center"
         width="50">
       </el-table-column>
-      <el-table-column
+     <!-- <el-table-column
         prop="id"
         header-align="center"
         align="center"
         label="主键">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="account"
         header-align="center"
@@ -68,7 +68,11 @@
         prop="type"
         header-align="center"
         align="center"
-        label="1.同步完成 2.未完成同步">
+        label="同步状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.type === 1" type="primary">同步完成</el-tag>
+          <el-tag v-if="+scope.row.type === 2" type="primary">未完成同步</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createTime"

@@ -17,18 +17,24 @@
       <el-input v-model="dataForm.number" placeholder="资产"></el-input>
     </el-form-item>
     <el-form-item label="生成节点名" prop="node">
-      <el-input v-model="dataForm.node" placeholder="生成节点名"></el-input>
+      <!--<el-select v-model="dataForm.node" style="width: 100%;" placeholder="请选择状态">
+        <el-option v-for="(nodeItem, index) in nodeList" :label="nodeItem.name" :value="nodeItem.id" :key="index"/>
+      </el-select>-->
+      <el-input v-model="dataForm.node" placeholder="节点名字"></el-input>
     </el-form-item>
     <el-form-item label="同步节点数量" prop="synNumber">
       <el-input v-model="dataForm.synNumber" placeholder="同步节点数量"></el-input>
     </el-form-item>
-    <el-form-item label="1.同步完成 2.未完成同步" prop="type">
-      <el-input v-model="dataForm.type" placeholder="1.同步完成 2.未完成同步"></el-input>
+    <el-form-item label="同步状态" prop="type">
+      <el-select v-model="dataForm.type" style="width: 100%;" placeholder="请选择状态">
+        <el-option label="同步完成" :value="1"/>
+        <el-option label="未完成同步" :value="2"/>
+      </el-select>
     </el-form-item>
-    <el-form-item label="创建时间" prop="createTime">
+    <el-form-item v-if="false" label="创建时间" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
     </el-form-item>
-    <el-form-item label="更新时间" prop="updateTime">
+    <el-form-item v-if="false" label="更新时间" prop="updateTime">
       <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
     </el-form-item>
     </el-form>
@@ -40,10 +46,13 @@
 </template>
 
 <script>
+  import { formatTime } from '../../../utils'
+
   export default {
     data () {
       return {
         visible: false,
+        nodeList: [],
         dataForm: {
           id: 0,
           account: '',
@@ -79,10 +88,10 @@
             { required: true, message: '1.同步完成 2.未完成同步不能为空', trigger: 'blur' }
           ],
           createTime: [
-            { required: true, message: '创建时间不能为空', trigger: 'blur' }
+            { required: false, message: '创建时间不能为空', trigger: 'blur' }
           ],
           updateTime: [
-            { required: true, message: '更新时间不能为空', trigger: 'blur' }
+            { required: false, message: '更新时间不能为空', trigger: 'blur' }
           ]
         }
       }
@@ -100,10 +109,16 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.code === 1) {
+                this.nodeList = data.nodeNames
                 this.dataForm.account = data.addresses.account
                 this.dataForm.address = data.addresses.address
                 this.dataForm.userid = data.addresses.userid
                 this.dataForm.number = data.addresses.number
+                // data.address.nodeNames.forEach((id,name)=>{
+                //   if(id === data.addresses.node) {
+                //     this.dataForm.nodename = name
+                //   }
+                // })
                 this.dataForm.node = data.addresses.node
                 this.dataForm.synNumber = data.addresses.synNumber
                 this.dataForm.type = data.addresses.type
@@ -130,8 +145,8 @@
                 'node': this.dataForm.node,
                 'synNumber': this.dataForm.synNumber,
                 'type': this.dataForm.type,
-                'createTime': this.dataForm.createTime,
-                'updateTime': this.dataForm.updateTime
+                'createTime': this.dataForm.createTime ? this.dataForm.createTime : formatTime(),
+                'updateTime': formatTime()
               })
             }).then(({data}) => {
               if (data && data.code === 1) {

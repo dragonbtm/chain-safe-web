@@ -43,6 +43,7 @@
           <el-tag v-if="+scope.row.type === 1" type="primary">充币</el-tag>
           <el-tag v-if="+scope.row.type === 2" type="primary">提币</el-tag>
           <el-tag v-if="+scope.row.type === 3" type="primary">分发比特币</el-tag>
+          <el-tag v-if="+scope.row.type === 4" type="primary">充币shadow</el-tag>
         </template>
       </el-table-column>
      <!-- <el-table-column
