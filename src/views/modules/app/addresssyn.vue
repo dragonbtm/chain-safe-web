@@ -26,13 +26,14 @@
         prop="id"
         header-align="center"
         align="center"
-        label="">
+        label="主键">
       </el-table-column>
       <el-table-column
+        :show-overflow-tooltip="true"
         prop="address"
         header-align="center"
         align="center"
-        label="">
+        label="地址">
       </el-table-column>
       <el-table-column
         prop="node"
@@ -44,19 +45,23 @@
         prop="status"
         header-align="center"
         align="center"
-        label="1.成功 2.失败">
+        label="同步状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.status === 1" type="success">成功</el-tag>
+          <el-tag v-if="+scope.row.status === 2" type="info">失败</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="createTime"
         header-align="center"
         align="center"
-        label="">
+        label="创建时间">
       </el-table-column>
       <el-table-column
         prop="updateTime"
         header-align="center"
         align="center"
-        label="">
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"

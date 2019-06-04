@@ -35,6 +35,7 @@
         label="账户">
       </el-table-column>
       <el-table-column
+        :show-overflow-tooltip="true"
         prop="address"
         header-align="center"
         align="center"
@@ -70,8 +71,8 @@
         align="center"
         label="同步状态">
         <template slot-scope="scope">
-          <el-tag v-if="+scope.row.type === 1" type="primary">同步完成</el-tag>
-          <el-tag v-if="+scope.row.type === 2" type="primary">未完成同步</el-tag>
+          <el-tag v-if="+scope.row.type === 1" type="success">同步完成</el-tag>
+          <el-tag v-if="+scope.row.type === 2" type="info">未完成同步</el-tag>
         </template>
       </el-table-column>
       <el-table-column
