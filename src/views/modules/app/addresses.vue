@@ -54,6 +54,12 @@
         label="资产">
       </el-table-column>
       <el-table-column
+        prop="btc"
+        header-align="center"
+        align="center"
+        label="btc资产">
+      </el-table-column>
+      <el-table-column
         prop="node"
         header-align="center"
         align="center"
@@ -73,6 +79,17 @@
         <template slot-scope="scope">
           <el-tag v-if="+scope.row.type === 1" type="success">同步完成</el-tag>
           <el-tag v-if="+scope.row.type === 2" type="info">未完成同步</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="cstatus"
+        header-align="center"
+        align="center"
+        label="归集状态状态">
+        <template slot-scope="scope">
+          <el-tag v-if="+scope.row.cstatus === 0" type="success">无需归集</el-tag>
+          <el-tag v-if="+scope.row.cstatus === 1" type="info">可以归集</el-tag>
+          <el-tag v-if="+scope.row.cstatus === 2" type="warning">btc不足</el-tag>
         </template>
       </el-table-column>
       <el-table-column

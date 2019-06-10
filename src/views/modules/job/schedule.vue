@@ -52,6 +52,7 @@
         label="cron表达式">
       </el-table-column>
       <el-table-column
+        :show-overflow-tooltip="true"
         prop="remark"
         header-align="center"
         align="center"
