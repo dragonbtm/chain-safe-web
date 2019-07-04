@@ -4,6 +4,7 @@
 ;(function () {
   window.SITE_CONFIG = {}
 
+  // window.SITE_CONFIG['baseUrl'] = 'http://chain.gy1118.cn:10080'
   window.SITE_CONFIG['baseUrl'] = 'http://localhost:10080'
 
   // omni1

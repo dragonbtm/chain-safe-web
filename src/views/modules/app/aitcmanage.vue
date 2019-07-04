@@ -6,119 +6,48 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('app:addresses:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('app:addresses:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('app:aitcmanage:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('app:aitcmanage:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="dataList"
-      border
-      v-loading="dataListLoading"
-      @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-     <!-- <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="主键">
-      </el-table-column>-->
-      <el-table-column
-        prop="account"
-        header-align="center"
-        align="center"
-        label="账户">
-      </el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="address"
-        header-align="center"
-        align="center"
-        label="地址">
-      </el-table-column>
-    <!--  <el-table-column
-        prop="userid"
-        header-align="center"
-        align="center"
-        label="用户id">
-      </el-table-column>-->
-      <el-table-column
-        prop="number"
-        header-align="center"
-        align="center"
-        label="资产">
-      </el-table-column>
-      <el-table-column
-        prop="btc"
-        header-align="center"
-        align="center"
-        label="btc资产">
-      </el-table-column>
-      <el-table-column
-        prop="node"
-        header-align="center"
-        align="center"
-        label="生成节点名">
-      </el-table-column>
-      <el-table-column
-        prop="synNumber"
-        header-align="center"
-        align="center"
-        label="同步节点数量">
-      </el-table-column>
-      <el-table-column
-        prop="type"
-        header-align="center"
-        align="center"
-        label="同步状态">
-        <template slot-scope="scope">
-          <el-tag v-if="+scope.row.type === 1" type="success">同步完成</el-tag>
-          <el-tag v-if="+scope.row.type === 2" type="info">未完成同步</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="cstatus"
-        header-align="center"
-        align="center"
-        label="归集状态状态">
-        <template slot-scope="scope">
-          <el-tag v-if="+scope.row.cstatus === 0" type="success">无需归集</el-tag>
-          <el-tag v-if="+scope.row.cstatus === 1" type="info">可以归集</el-tag>
-          <el-tag v-if="+scope.row.cstatus === 2" type="warning">btc不足</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="createTime"
-        header-align="center"
-        align="center"
-        label="创建时间">
-      </el-table-column>
-      <el-table-column
-        prop="updateTime"
-        header-align="center"
-        align="center"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+    <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
+      <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
+        <el-table-column  prop="id"  header-align="center"  align="center"  label="主键">
+        </el-table-column>
+        <el-table-column  prop="name"  header-align="center"  align="center"  label="节点名字">
+        </el-table-column>
+        <el-table-column  prop="type"  header-align="center"  align="center"  label="类型">
+          <el-tag v-if="+scope.row.status === 1" type="error">冲币</el-tag>
+          <el-tag v-if="+scope.row.status === 2" type="success">提币</el-tag>
+          <el-tag v-if="+scope.row.status === 4" type="success">冲币shadow</el-tag>
+        </el-table-column>
+       <!-- <el-table-column  prop="rpcuser"  header-align="center"  align="center"  label="用户">
+        </el-table-column>
+        <el-table-column  prop="rpcpassword"  header-align="center"  align="center"  label="密码">
+        </el-table-column>
+        <el-table-column  prop="ip"  header-align="center"  align="center"  label="ip">
+        </el-table-column>
+        <el-table-column  prop="port"  header-align="center"  align="center"  label="端口">
+        </el-table-column>-->
+        <el-table-column  prop="status"  header-align="center"  align="center"  label="状态状态">
+          <el-tag v-if="+scope.row.status === 1" type="error">启动</el-tag>
+          <el-tag v-if="+scope.row.status === 2" type="success">停用</el-tag>
+          <el-tag v-if="+scope.row.status === 3" type="success">异常</el-tag>
+        </el-table-column>
+        <el-table-column  :show-overflow-tooltip="true" prop="address"  header-align="center"  align="center"  label="总地址">
+        </el-table-column>
+        <el-table-column  prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        </el-table-column>
+        <el-table-column  prop="updateTime"  header-align="center"  align="center"  label="更新时间">
+        </el-table-column>
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
+    <el-pagination  @size-change="sizeChangeHandle"  @current-change="currentChangeHandle"
       :current-page="pageIndex"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="pageSize"
@@ -131,7 +60,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './addresses-add-or-update'
+  import AddOrUpdate from './aitcmanage-add-or-update'
   export default {
     data () {
       return {
@@ -158,7 +87,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/app/addresses/list'),
+          url: this.$http.adornUrl('/app/aitcmanage/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
@@ -209,7 +138,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/app/addresses/delete'),
+            url: this.$http.adornUrl('/app/aitcmanage/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
