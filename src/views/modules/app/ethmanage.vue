@@ -6,58 +6,52 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('app:aitcin:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('app:aitcin:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('app:ethmanage:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('app:ethmanage:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
         <el-table-column  prop="id"  header-align="center"  align="center"  label="主键">
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true"  prop="txid"  header-align="center"  align="center"  label="交易hash">
+        <el-table-column  prop="name"  header-align="center"  align="center"  label="节点名字">
         </el-table-column>
-        <el-table-column  prop="amount"  header-align="center"  align="center"  label="金额">
-        </el-table-column>
-        <el-table-column  prop="confirmations"  header-align="center"  align="center"  label="确认次数">
-        </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="account"  header-align="center"  align="center"  label="账户">
-        </el-table-column>
-        <!--<el-table-column  prop="label"  header-align="center"  align="center"  label="标签">
-        </el-table-column>-->
-        <el-table-column :show-overflow-tooltip="true"  prop="address"  header-align="center"  align="center"  label="接收地址">
-        </el-table-column>
-        <!--<el-table-column  prop="blockhash"  header-align="center"  align="center"  label="blockhash">
-        </el-table-column>-->
-        <el-table-column  prop="blockindex"  header-align="center"  align="center"  label="mci">
-        </el-table-column>
-        <!--<el-table-column  prop="blocktime"  header-align="center"  align="center"  label="blocktime">
-        </el-table-column>-->
-        <el-table-column  prop="time"  header-align="center"  align="center"  label="time">
-        </el-table-column>
-        <!--<el-table-column  prop="timereceived"  header-align="center"  align="center"  label="接收时间">
-        </el-table-column>-->
-        <!--<el-table-column  prop="block"  header-align="center"  align="center"  label="区块">
-        </el-table-column>-->
-        <el-table-column  prop="status"  header-align="center"  align="center"  label="交易状态">
+        <el-table-column  prop="type"  header-align="center"  align="center"  label="类型">
           <template slot-scope="scope">
-            <el-tag v-if="+scope.row.status === 0" type="error">未确认</el-tag>
-            <el-tag v-if="+scope.row.status === 1" type="success">已确认</el-tag>
+            <el-tag v-if="+scope.row.type === 1" type="success">冲币</el-tag>
+            <el-tag v-if="+scope.row.type === 2" type="success">提币</el-tag>
+            <el-tag v-if="+scope.row.type === 4" type="success">冲币shadow</el-tag>
           </template>
         </el-table-column>
-        <el-table-column  prop="isSend"  header-align="center"  align="center"  label="推送状态">
+        <!--<el-table-column  prop="rpcuser"  header-align="center"  align="center"  label="用户">
+        </el-table-column>
+        <el-table-column  prop="rpcpassword"  header-align="center"  align="center"  label="密码">
+        </el-table-column>
+        <el-table-column  prop="ip"  header-align="center"  align="center"  label="ip">
+        </el-table-column>
+        <el-table-column  prop="port"  header-align="center"  align="center"  label="端口">
+        </el-table-column>-->
+        <el-table-column  prop="status"  header-align="center"  align="center"  label="状态状态">
           <template slot-scope="scope">
-            <el-tag v-if="+scope.row.isSend === 0" type="error">未处理</el-tag>
-            <el-tag v-if="+scope.row.isSend === 1" type="success">已推送</el-tag>
+            <el-tag v-if="+scope.row.status === 1" type="success">启动</el-tag>
+            <el-tag v-if="+scope.row.status === 2" type="primary">停用</el-tag>
+            <el-tag v-if="+scope.row.status === 3" type="error">异常</el-tag>
           </template>
         </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        <el-table-column :show-overflow-tooltip="true" prop="address"  header-align="center"  align="center"  label="总地址">
         </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="updateTime"  header-align="center"  align="center"  label="更新时间">
+      <el-table-column :show-overflow-tooltip="true" prop="coinaddress"  header-align="center"  align="center"  label="合约地址">
+      </el-table-column>
+        <el-table-column  prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        </el-table-column>
+        <el-table-column  prop="updateTime"  header-align="center"  align="center"  label="更新时间">
         </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="+scope.row.status === 1" type="text" size="small" @click="statusHandle(scope.row, 2)">停用</el-button>
+          <el-button v-if="+scope.row.status === 2" type="text" size="small" @click="statusHandle(scope.row, 1)">启用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,7 +68,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './aitcin-add-or-update'
+  import AddOrUpdate from './ethmanage-add-or-update'
+  import { formatTime } from '../../../utils'
+
   export default {
     data () {
       return {
@@ -101,7 +97,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/app/aitcin/list'),
+          url: this.$http.adornUrl('/app/ethmanage/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
@@ -152,7 +148,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/app/aitcin/delete'),
+            url: this.$http.adornUrl('/app/ethmanage/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
@@ -170,6 +166,37 @@
             }
           })
         })
+      },
+      // 禁用
+      statusHandle (row, status) {
+        const textStatus = status === 1 ? `启用id=${row.id}节点` : `停用id=${row.id}节点`
+        const dataForm = Object.assign({}, row)
+        dataForm.status = status
+        this.$confirm(`此操作将${textStatus}, 是否继续?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          dataForm.updateTime = formatTime()
+          this.$http({
+            url: this.$http.adornUrl(`/app/ethmanage/${!dataForm.id ? 'save' : 'update'}`),
+            method: 'post',
+            data: this.$http.adornData(dataForm)
+          }).then(({data}) => {
+            if (data && data.code === 1) {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }).catch(() => {})
       }
     }
   }

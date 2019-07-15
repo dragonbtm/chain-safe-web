@@ -6,53 +6,43 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('app:aitcin:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('app:aitcin:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('app:ethtransactions:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('app:ethtransactions:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
         <el-table-column  prop="id"  header-align="center"  align="center"  label="主键">
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true"  prop="txid"  header-align="center"  align="center"  label="交易hash">
+        <el-table-column  prop="sendId"  header-align="center"  align="center"  label="发送id">
+        </el-table-column>
+        <el-table-column  prop="account"  header-align="center"  align="center"  label="账户">
+        </el-table-column>
+        <el-table-column  prop="hash"  header-align="center"  align="center"  label="hash值">
         </el-table-column>
         <el-table-column  prop="amount"  header-align="center"  align="center"  label="金额">
         </el-table-column>
         <el-table-column  prop="confirmations"  header-align="center"  align="center"  label="确认次数">
         </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="account"  header-align="center"  align="center"  label="账户">
+        <el-table-column  prop="fromaddress"  header-align="center"  align="center"  label="发送方">
         </el-table-column>
-        <!--<el-table-column  prop="label"  header-align="center"  align="center"  label="标签">
-        </el-table-column>-->
-        <el-table-column :show-overflow-tooltip="true"  prop="address"  header-align="center"  align="center"  label="接收地址">
+        <el-table-column  prop="toaddress"  header-align="center"  align="center"  label="接收方">
         </el-table-column>
-        <!--<el-table-column  prop="blockhash"  header-align="center"  align="center"  label="blockhash">
-        </el-table-column>-->
-        <el-table-column  prop="blockindex"  header-align="center"  align="center"  label="mci">
+        <el-table-column  prop="label"  header-align="center"  align="center"  label="备注">
         </el-table-column>
-        <!--<el-table-column  prop="blocktime"  header-align="center"  align="center"  label="blocktime">
-        </el-table-column>-->
-        <el-table-column  prop="time"  header-align="center"  align="center"  label="time">
+        <el-table-column  prop="time"  header-align="center"  align="center"  label="时间">
         </el-table-column>
-        <!--<el-table-column  prop="timereceived"  header-align="center"  align="center"  label="接收时间">
-        </el-table-column>-->
-        <!--<el-table-column  prop="block"  header-align="center"  align="center"  label="区块">
-        </el-table-column>-->
-        <el-table-column  prop="status"  header-align="center"  align="center"  label="交易状态">
-          <template slot-scope="scope">
-            <el-tag v-if="+scope.row.status === 0" type="error">未确认</el-tag>
-            <el-tag v-if="+scope.row.status === 1" type="success">已确认</el-tag>
-          </template>
+        <el-table-column  prop="timereceived"  header-align="center"  align="center"  label="接收时间">
         </el-table-column>
-        <el-table-column  prop="isSend"  header-align="center"  align="center"  label="推送状态">
-          <template slot-scope="scope">
-            <el-tag v-if="+scope.row.isSend === 0" type="error">未处理</el-tag>
-            <el-tag v-if="+scope.row.isSend === 1" type="success">已推送</el-tag>
-          </template>
+        <el-table-column  prop="block"  header-align="center"  align="center"  label="块">
         </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        <el-table-column  prop="status"  header-align="center"  align="center"  label="状态0.未处理 1.转账成功 2.比特币不足 3.转账失败">
         </el-table-column>
-        <el-table-column  :show-overflow-tooltip="true" prop="updateTime"  header-align="center"  align="center"  label="更新时间">
+        <el-table-column  prop="isSend"  header-align="center"  align="center"  label="0.消息未发送 1.消息已发送">
+        </el-table-column>
+        <el-table-column  prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        </el-table-column>
+        <el-table-column  prop="updateTime"  header-align="center"  align="center"  label="更新时间">
         </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
@@ -74,7 +64,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './aitcin-add-or-update'
+  import AddOrUpdate from './ethtransactions-add-or-update'
   export default {
     data () {
       return {
@@ -101,7 +91,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/app/aitcin/list'),
+          url: this.$http.adornUrl('/app/ethtransactions/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
@@ -152,7 +142,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/app/aitcin/delete'),
+            url: this.$http.adornUrl('/app/ethtransactions/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {

@@ -12,11 +12,11 @@
     </el-form>
     <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
-        <el-table-column  prop="id"  header-align="center"  align="center"  label="主键">
-        </el-table-column>
+      <!--  <el-table-column  prop="id"  header-align="center"  align="center"  label="主键">
+        </el-table-column>-->
         <el-table-column  prop="account"  header-align="center"  align="center"  label="账户">
         </el-table-column>
-        <el-table-column  prop="address"  header-align="center"  align="center"  label="地址">
+        <el-table-column  :show-overflow-tooltip="true" prop="address"  header-align="center"  align="center"  label="地址">
         </el-table-column>
         <el-table-column  prop="userid"  header-align="center"  align="center"  label="用户id">
         </el-table-column>
@@ -26,15 +26,15 @@
         </el-table-column>
         <el-table-column  prop="synNumber"  header-align="center"  align="center"  label="同步节点数量">
         </el-table-column>
-        <el-table-column  prop="type"  header-align="center"  align="center"  label="1.同步完成 2.未完成同步">
+        <el-table-column  prop="type"  header-align="center"  align="center"  label="同步状态">
+          <template slot-scope="scope">
+            <el-tag v-if="+scope.row.type === 1" type="success">同步完成</el-tag>
+            <el-tag v-if="+scope.row.type === 2" type="primary">未完成同步</el-tag>
+          </template>
         </el-table-column>
-        <el-table-column  prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        <el-table-column  :show-overflow-tooltip="true" prop="createTime"  header-align="center"  align="center"  label="创建时间">
         </el-table-column>
-        <el-table-column  prop="updateTime"  header-align="center"  align="center"  label="更新时间">
-        </el-table-column>
-        <el-table-column  prop="btc"  header-align="center"  align="center"  label="比特币资产">
-        </el-table-column>
-        <el-table-column  prop="cStatus"  header-align="center"  align="center"  label="归集状态0.无需归集 1.可以归集 2,归集比特币不足">
+        <el-table-column  :show-overflow-tooltip="true" prop="updateTime"  header-align="center"  align="center"  label="更新时间">
         </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">

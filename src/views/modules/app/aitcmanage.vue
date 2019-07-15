@@ -17,9 +17,11 @@
         <el-table-column  prop="name"  header-align="center"  align="center"  label="节点名字">
         </el-table-column>
         <el-table-column  prop="type"  header-align="center"  align="center"  label="类型">
-          <el-tag v-if="+scope.row.status === 1" type="error">冲币</el-tag>
-          <el-tag v-if="+scope.row.status === 2" type="success">提币</el-tag>
-          <el-tag v-if="+scope.row.status === 4" type="success">冲币shadow</el-tag>
+          <template slot-scope="scope">
+            <el-tag v-if="+scope.row.type === 1" type="success">冲币</el-tag>
+            <el-tag v-if="+scope.row.type === 2" type="success">提币</el-tag>
+            <el-tag v-if="+scope.row.type === 4" type="success">冲币shadow</el-tag>
+          </template>
         </el-table-column>
        <!-- <el-table-column  prop="rpcuser"  header-align="center"  align="center"  label="用户">
         </el-table-column>
@@ -30,20 +32,24 @@
         <el-table-column  prop="port"  header-align="center"  align="center"  label="端口">
         </el-table-column>-->
         <el-table-column  prop="status"  header-align="center"  align="center"  label="状态状态">
-          <el-tag v-if="+scope.row.status === 1" type="error">启动</el-tag>
-          <el-tag v-if="+scope.row.status === 2" type="success">停用</el-tag>
-          <el-tag v-if="+scope.row.status === 3" type="success">异常</el-tag>
+          <template slot-scope="scope">
+            <el-tag v-if="+scope.row.status === 1" type="success">启动</el-tag>
+            <el-tag v-if="+scope.row.status === 2" type="primary">停用</el-tag>
+            <el-tag v-if="+scope.row.status === 3" type="error">异常</el-tag>
+          </template>
         </el-table-column>
         <el-table-column  :show-overflow-tooltip="true" prop="address"  header-align="center"  align="center"  label="总地址">
         </el-table-column>
-        <el-table-column  prop="createTime"  header-align="center"  align="center"  label="创建时间">
+        <el-table-column  :show-overflow-tooltip="true" prop="createTime"  header-align="center"  align="center"  label="创建时间">
         </el-table-column>
-        <el-table-column  prop="updateTime"  header-align="center"  align="center"  label="更新时间">
+        <el-table-column  :show-overflow-tooltip="true" prop="updateTime"  header-align="center"  align="center"  label="更新时间">
         </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="+scope.row.status === 1" type="text" size="small" @click="statusHandle(scope.row, 2)">停用</el-button>
+          <el-button v-if="+scope.row.status === 2" type="text" size="small" @click="statusHandle(scope.row, 1)">启用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,6 +67,7 @@
 
 <script>
   import AddOrUpdate from './aitcmanage-add-or-update'
+  import { formatTime } from '../../../utils'
   export default {
     data () {
       return {
@@ -156,6 +163,37 @@
             }
           })
         })
+      },
+      // 禁用
+      statusHandle (row, status) {
+        const textStatus = status === 1 ? `启用id=${row.id}节点` : `停用id=${row.id}节点`
+        const dataForm = Object.assign({}, row)
+        dataForm.status = status
+        this.$confirm(`此操作将${textStatus}, 是否继续?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          dataForm.updateTime = formatTime()
+          this.$http({
+            url: this.$http.adornUrl(`/app/aitcmanage/${!dataForm.id ? 'save' : 'update'}`),
+            method: 'post',
+            data: this.$http.adornData(dataForm)
+          }).then(({data}) => {
+            if (data && data.code === 1) {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }).catch(() => {})
       }
     }
   }
