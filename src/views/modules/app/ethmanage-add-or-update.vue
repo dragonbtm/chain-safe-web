@@ -150,7 +150,7 @@
                 'status': this.dataForm.status,
                 'address': this.dataForm.address,
                 'coinaddress': this.dataForm.coinaddress,
-                'keystorepassword': this.dataForm.coinaddress,
+                'keystorepassword': this.dataForm.keystorepassword,
                 'createTime': this.dataForm.createTime,
                 'updateTime': this.dataForm.updateTime
               })
